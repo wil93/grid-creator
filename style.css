@@ -3,6 +3,11 @@ div.test {
   float: left;
 }
 
+div.test table {
+  font-family: monospace;
+  font-size: 25pt;
+}
+
 li:before {
   content: 'time: ';
 }
