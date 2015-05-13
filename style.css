@@ -8,6 +8,10 @@ div.test table {
   font-size: 25pt;
 }
 
+div.test td {
+  border: 3px solid black;
+}
+
 li:before {
   content: 'time: ';
 }
