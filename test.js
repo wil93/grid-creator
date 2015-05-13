@@ -42,7 +42,8 @@ var run_test = function(test_id) {
   // Show the time
   let new_time = document.createElement("li")
   new_time.innerHTML = (stop - start) + " ms"
-  document.getElementById(test_id + "-times").appendChild(new_time)
+  let times = document.getElementById(test_id + "-times")
+  times.insertBefore(new_time, times.firstChild)
 }
 
 window.onload = function() {
