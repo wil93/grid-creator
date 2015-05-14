@@ -51,11 +51,13 @@ window.onload = function() {
     let test = document.createElement("div")
     let table = document.createElement("table")
     let button = document.createElement("button")
-    let times = document.createElement("ul")
+    let times = document.createElement("ol")
 
     table.id = t
     times.id = t + "-times"
     button.id = t + "-button"
+
+    times.reversed = true
     button.onclick = function() { run_test(t) }
     button.innerHTML = t
 
