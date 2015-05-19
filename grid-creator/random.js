@@ -1,7 +1,7 @@
 'use strict'
 
-function RandomGridCreatorJS(id) {
-  this.id = id;
+function RandomGridCreatorJS(word_list) {
+  this.word_list = word_list;
   this.distribution = [
     {"E": 0.1199}, {"A": 0.1102}, {"I": 0.1029},
     {"O": 0.1010}, {"N": 0.0704}, {"T": 0.0699},

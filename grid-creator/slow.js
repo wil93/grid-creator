@@ -1,7 +1,7 @@
 'use strict'
 
-function SlowGridCreatorJS(id) {
-  this.id = id;
+function SlowGridCreatorJS(word_list) {
+  this.word_list = word_list;
 
   this.create_grid = function() {
     let conta = 0

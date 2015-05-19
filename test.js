@@ -2,6 +2,7 @@
 
 var TESTS = {
   "test-random": RandomGridCreatorJS,
+  "test-trie": TrieGridCreatorJS,
   //"test-slow": SlowGridCreatorJS,
   //"test2": FastGridCreatorJS,   (?)
 }
@@ -18,22 +19,25 @@ var run_test = function(test_id) {
     test.removeChild(test.firstChild)
   }
 
+  // Compute word list
+  let word_list = "amico,amica,amici,amiche,madre,padre,marito,moglie,papa,babbo,mamma,genitori,figlio,figlia,figli,figlie,fratello,fratelli,sorelle,sorella,zii,zie,zio,zia,cugino,cugini,cugine,cugina,nonno,nonni,nonne,nonna,nipote,nipoti,prozio,prozia,sorella,fratello".split(",");
+
   // Start timer
   let start = new Date().getTime()
 
   // Create the test object and "run" it
   let Test = TESTS[test_id]
-  let grid = new Test().create_grid()
+  let result = new Test(word_list).run()
 
   // Stop timer
   let stop = new Date().getTime()
 
   // Show the table
-  for (let row in grid) {
+  for (let row in result.grid) {
     let tr = document.createElement("tr")
-    for (let col in grid[row]) {
+    for (let col in result.grid[row]) {
       let td = document.createElement("td")
-      td.innerHTML = grid[row][col];
+      td.innerHTML = result.grid[row][col];
       tr.appendChild(td);
     }
     test.appendChild(tr)
