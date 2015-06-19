@@ -2,8 +2,8 @@
 
 var TESTS = {
   "test-random": RandomGridCreatorJS,
-  "test-trie": TrieGridCreatorJS,
-  //"test-slow": SlowGridCreatorJS,
+  // "test-trie": TrieGridCreatorJS,
+  "test-slow": SlowGridCreatorJS,
   //"test2": FastGridCreatorJS,   (?)
 }
 
@@ -45,7 +45,7 @@ var run_test = function(test_id) {
 
   // Show the time
   let new_time = document.createElement("li")
-  new_time.innerHTML = (stop - start) + " ms"
+  new_time.innerHTML = result.total + " parole inserite in " + (stop - start) + " ms"
   let times = document.getElementById(test_id + "-times")
   times.insertBefore(new_time, times.firstChild)
 }
