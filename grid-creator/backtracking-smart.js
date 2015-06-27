@@ -1,6 +1,6 @@
 'use strict'
 
-function SmartGridCreatorJS(word_list) {
+function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   var word_list = word_list;
   var result = [
     ["-", "-", "-", "-"],
@@ -44,7 +44,7 @@ function SmartGridCreatorJS(word_list) {
     let differences = 0
     for(let i=0;i<4;i++){
       for(let j=0;j<4;j++){
-        if(test[i][j]=='-') differences++
+        if(temp[i][j]=='-') differences++
       }
     }
     if (differences < freecell){
