@@ -1,6 +1,6 @@
 'use strict'
 
-function SlowGridCreatorJS(word_list) {
+function SmartGridCreatorJS(word_list) {
   var word_list = word_list;
   var result = [
     ["-", "-", "-", "-"],
@@ -8,7 +8,20 @@ function SlowGridCreatorJS(word_list) {
     ["-", "-", "-", "-"],
     ["-", "-", "-", "-"],
   ]
+  var temp = [
+    ["-", "-", "-", "-"],
+    ["-", "-", "-", "-"],
+    ["-", "-", "-", "-"],
+    ["-", "-", "-", "-"],
+  ]
+  var candidate = [
+    ["Z", "Z", "Z", "Z"],
+    ["Z", "Z", "Z", "Z"],
+    ["Z", "Z", "Z", "Z"],
+    ["Z", "Z", "Z", "Z"],
+  ]
   var usati = new Set()
+  var freecell = 16
 
 
   this.run = function() {
@@ -17,6 +30,7 @@ function SlowGridCreatorJS(word_list) {
 
     do {
         insert = insertWord(word_list[conta])
+        result = candidate
         if (insert) conta++
     } while (insert == true)
 
@@ -24,6 +38,20 @@ function SlowGridCreatorJS(word_list) {
       "grid": result,
       "total": conta,
     }
+  }
+
+  function comparison(){
+    let differences = 0
+    for(int i=0;i<4;i++){
+      for(int j=0;j<4;j++){
+        if(test[i][j]=='-') differences++
+      }
+    }
+    if (differences < freecell){
+        freecell = differences
+        return true
+    }
+    return false
   }
 
   function shuffle(array) {
@@ -45,6 +73,8 @@ function SlowGridCreatorJS(word_list) {
   }
 
   var insertWord = function(word) {
+    var bho = freecell
+    temp = result
     usati.clear()
     var pos = []
     for (let i=0; i<4; i++){
@@ -58,20 +88,27 @@ function SlowGridCreatorJS(word_list) {
     for (let k in pos) {
       let i = pos[k].i
       let j = pos[k].j
-      if (insertLetter(i, j, 0, word)) return true
+      if (insertLetter(i, j, 0, word)) {
+        if (comparison()){
+          candidate = temp
+        }
+      }
+      temp = result
+      }
     }
-    return false
+    if (bho == freecell) return false
+    return true
   }
 
   var insertLetter = function(x,y,count,word) {
-    if (result[x][y] == "-" || (result[x][y] == word[count] && !usati.has(x * 4 + y))) {
-      let old = result[x][y]
-      result[x][y] = word[count]
+    if (temp[x][y] == "-" || (temp[x][y] == word[count] && !usati.has(x * 4 + y))) {
+      let old = temp[x][y]
+      temp[x][y] = word[count]
       usati.add(x * 4 + y)
 
       if (count === word.length - 1) {
         return true
-      } else {    
+      } else {
         for (let i=-1; i<=1; i++){
           for (let j=-1; j<=1; j++){
             if (x+i>=0 && y+j>=0 && x+i<4 && y+j<4){
@@ -83,7 +120,7 @@ function SlowGridCreatorJS(word_list) {
         }
       }
 
-      result[x][y] = old
+      temp[x][y] = old
       usati.delete(x * 4 + y)
     }
     return false
