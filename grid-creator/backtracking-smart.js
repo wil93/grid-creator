@@ -21,7 +21,22 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     ["Z", "Z", "Z", "Z"],
   ]
   var usati = new Set()
-  var freecell = 16
+  var freecell = 0
+
+
+
+  function clone (existingArray) {
+     var newObj = (existingArray instanceof Array) ? [] : {};
+     for (i in existingArray) {
+        if (i == 'clone') continue;
+        if (existingArray[i] && typeof existingArray[i] == "object") {
+           newObj[i] = clone(existingArray[i]);
+        } else {
+           newObj[i] = existingArray[i]
+        }
+     }
+     return newObj;
+  }
 
 
   this.run = function() {
@@ -30,7 +45,7 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
 
     do {
         insert = insertWord(word_list[conta])
-        result = candidate
+        result = clone(candidate)
         if (insert) conta++
     } while (insert == true)
 
@@ -47,7 +62,7 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
         if(temp[i][j]=='-') differences++
       }
     }
-    if (differences < freecell){
+    if (differences >= freecell){
         freecell = differences
         return true
     }
@@ -74,7 +89,7 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
 
   var insertWord = function(word) {
     var bho = freecell
-    temp = result
+    temp = clone(result)
     usati.clear()
     var pos = []
     for (let i=0; i<4; i++){
@@ -90,10 +105,10 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
       let j = pos[k].j
       if (insertLetter(i, j, 0, word)) {
         if (comparison()){
-          candidate = temp
+          candidate = clone(temp)
         }
       }
-      temp = result
+      temp = clone(result)
     }
 
     if (bho == freecell) return false
