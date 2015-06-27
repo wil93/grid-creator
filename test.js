@@ -76,7 +76,7 @@ var run_test = function(test_id) {
   }
 
   // Compute word list
-  let word_list = "amico,amica,amici,amiche,madre,padre,marito,moglie,papa,babbo,mamma,genitori,figlio,figlia,figli,figlie,fratello,fratelli,sorelle,sorella,zii,zie,zio,zia,cugino,cugini,cugine,cugina,nonno,nonni,nonne,nonna,nipote,nipoti,prozio,prozia,sorella,fratello".split(",");
+  let word_list = "amico,amica,amici,amiche,madre,padre,marito,moglie,papa,babbo,mamma,genitori,figlio,figlia,figli,figlie,fratello,fratelli,sorelle,sorella,zii,zie,zio,zia,cugino,cugini,cugine,cugina,nonno,nonni,nonne,nonna,nipote,nipoti,prozio,prozia,sorella,fratello".toUpperCase().split(",");
 
   // Start timer
   let start = new Date().getTime()
