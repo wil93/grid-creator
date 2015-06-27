@@ -5,6 +5,7 @@ var TESTS = {
   // "test-trie": TrieGridCreatorJS,
   "test-slow": SlowGridCreatorJS,
   //"test2": FastGridCreatorJS,   (?)
+  "test-bckSm": SmartGridCreatorJS,
 }
 
 var run_test = function(test_id) {

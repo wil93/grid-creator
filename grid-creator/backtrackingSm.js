@@ -1,6 +1,6 @@
 'use strict'
 
-function SlowGridCreatorJS(word_list) {
+function SmartGridCreatorJS(word_list) {
   var word_list = word_list;
   var result = [
     ["-", "-", "-", "-"],
