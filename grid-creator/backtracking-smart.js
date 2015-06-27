@@ -94,8 +94,8 @@ function SmartGridCreatorJS(word_list) {
         }
       }
       temp = result
-      }
     }
+
     if (bho == freecell) return false
     return true
   }
