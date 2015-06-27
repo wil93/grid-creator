@@ -78,7 +78,9 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     var pos = []
     for (let i=0; i<4; i++){
       for (let j=0; j<4; j++){
-        pos.push({"i": i, "j": j})
+        if (result[i][j] === "-" || result[i][j] === word[0]) {
+          pos.push({"i": i, "j": j})
+        }
       }
     }
 
@@ -104,26 +106,42 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   }
 
   var insertLetter = function(x, y, count, word) {
-    if (result[x][y] == "-" || (result[x][y] == word[count] && !usati.has(x * 4 + y))) {
-      let old = result[x][y]
-      result[x][y] = word[count]
-      usati.add(x * 4 + y)
+    let old = result[x][y]
+    result[x][y] = word[count]
+    usati.add(x * 4 + y)
 
-      if (count === word.length - 1) {
-        // a candidate was found, let's clone it
-        candidate = clone(result)
-      } else {
-        for (let i=-1; i<=1; i++) {
-          for (let j=-1; j<=1; j++) {
-            if (x+i>=0 && y+j>=0 && x+i<4 && y+j<4) {
-              insertLetter(x+i,y+j,count+1,word)
+    if (count === word.length - 1) {
+      // a candidate was found, let's clone it
+      candidate = clone(result)
+    } else {
+      // list all the positions ("promising" ones first)
+      var pos = []
+      for (let i=-1; i<=1; i++) {
+        for (let j=-1; j<=1; j++) {
+          if (x+i>=0 && y+j>=0 && x+i<4 && y+j<4) {
+            let ci = x+i
+            let cj = y+j
+            if (result[ci][cj] === word[count + 1] && !usati.has(ci * 4 + cj)) {
+              pos.unshift({"i": ci, "j": cj})
+            } else if (result[ci][cj] === "-") {
+              pos.push({"i": ci, "j": cj})
             }
           }
         }
       }
 
-      result[x][y] = old
-      usati.delete(x * 4 + y)
+      // try the positions
+      for (let k in pos) {
+        let i = pos[k].i
+        let j = pos[k].j
+        insertLetter(i, j, count + 1, word)
+        if (candidate !== null) {
+          break
+        }
+      }
     }
+
+    result[x][y] = old
+    usati.delete(x * 4 + y)
   }
 }

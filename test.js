@@ -50,16 +50,22 @@ l'altra, fermandosi quando non riesce più ad inserire una nuova parola.`
   ],
   "repeated-test-bt": [
     Repeated(SlowGridCreatorJS),
-    `Questo algoritmo è un'estensione di "test-slow" che esegue tante volte lo
+    `Questo algoritmo è un'estensione di "test-bt" che esegue tante volte lo
 stesso algoritmo, tenendo traccia della migliore soluzione trovata, e si ferma
 quando esaurisce il tempo a sua disposizione.`
   ],
   "test-bt-smart": [
     SmartGridCreatorJS,
-    `Questo algoritmo è un miglioramento di "test-slow" che, invece di fermarsi
+    `Questo algoritmo è un miglioramento di "test-bt" che, invece di fermarsi
 appena trova un punto dove inserire una parola, continua a cercare nuovi punti
 e alla fine sceglie il candidato migliore (che introduce il minor numero di
 nuove lettere nella griglia).`
+  ],
+  "repeated-test-bt-smart": [
+    Repeated(SmartGridCreatorJS),
+    `Questo algoritmo è un'estensione di "test-bt-smart" che esegue tante volte
+lo stesso algoritmo, tenendo traccia della migliore soluzione trovata, e si
+ferma quando esaurisce il tempo a sua disposizione.`
   ]
 }
 
@@ -110,6 +116,8 @@ var run_test = function(test_id) {
 }
 
 window.onload = function() {
+  let width = 0
+
   for (let t in TESTS) {
     let test = document.createElement("div")
     let table = document.createElement("table")
@@ -135,5 +143,9 @@ window.onload = function() {
 
     test.setAttribute("class", "test")
     document.body.appendChild(test)
+
+    width += test.offsetWidth
   }
+
+  document.body.style.width = width + "px"
 }
