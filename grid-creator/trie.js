@@ -1,8 +1,9 @@
 'use strict'
 
-function TrieGridCreatorJS(word_list) {
-  this.DIM = 4
+function TrieGridCreatorJS(grid_side, word_list, timeout_ms) {
+  this.grid_side = grid_side
   this.word_list = word_list
+  this.timeout_ms = timeout_ms
   this.trie_list = []
 
   /**
@@ -52,8 +53,8 @@ function TrieGridCreatorJS(word_list) {
       let pts = this.best_points(trie)
 
       let ok = false
-      for (var i in pts) {
-        if (this.backtrack(pts.i, pts.j, trie, )) {
+      for (var j in pts) {
+        if (this.backtrack(pts[j].i, pts[j].j, trie/*, */)) {
           // We can stop here
           ok = true
           break
@@ -74,7 +75,7 @@ function TrieGridCreatorJS(word_list) {
 function Trie() {
   this.root = {}
 
-  this.insert(word, ptr) {
+  this.insert(word, ptr) = function() {
 
   }
 }
