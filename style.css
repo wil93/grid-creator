@@ -14,7 +14,3 @@ div.test td {
   height: 40px;
   text-align: center;
 }
-
-li:before {
-  content: 'time: ';
-}

@@ -1,10 +1,59 @@
 'use strict'
 
+var GRID_SIDE = 4
+var TIMEOUT_MS = 5000
+
+var Repeated = function(Test) {
+  return function(grid_side, word_list, timeout_ms) {
+    let start_time = new Date().getTime()
+
+    this.run = function() {
+      let best = 0
+      let grid = []
+      let runs = 0
+      let remaining = timeout_ms
+
+      while (remaining > 0) {
+        let start = new Date().getTime()
+
+        let candidate = new Test(grid_side, word_list, remaining).run()
+        if (candidate.total > best) {
+          best = candidate.total
+          grid = candidate.grid
+        }
+        runs += 1
+
+        // subtract elapsed time for this run
+        remaining -= (new Date().getTime() - start)
+      }
+
+      return {
+        "grid": grid,
+        "total": best,
+        "runs": runs
+      }
+    }
+  }
+}
+
 var TESTS = {
-  "test-random": RandomGridCreatorJS,
-  // "test-trie": TrieGridCreatorJS,
-  "test-slow": SlowGridCreatorJS,
-  //"test2": FastGridCreatorJS,   (?)
+  "test-random": [
+    RandomGridCreatorJS,
+    `Questo algoritmo non prova ad inserire le parole, limitandosi invece a
+generare una matrice seguendo la distribuzione delle lettere nella lingua
+italiana. È quindi solo un algoritmo di prova per testare il "framework".`
+  ],
+  "test-slow": [
+    SlowGridCreatorJS,
+    `Questo algoritmo è un semplice backtracking che inserisce una parola dopo
+l'altra, fermandosi quando non riesce più ad inserire una nuova parola.`
+  ],
+  "repeated-test-slow": [
+    Repeated(SlowGridCreatorJS),
+    `Questo algoritmo è un'estensione di "test-slow" che esegue tante volte lo
+stesso algoritmo, tenendo traccia della migliore soluzione trovata, e si ferma
+quando esaurisce il tempo a sua disposizione.`
+  ],
 }
 
 var run_test = function(test_id) {
@@ -26,8 +75,8 @@ var run_test = function(test_id) {
   let start = new Date().getTime()
 
   // Create the test object and "run" it
-  let Test = TESTS[test_id]
-  let result = new Test(word_list).run()
+  let Test = TESTS[test_id][0]
+  let result = new Test(GRID_SIDE, word_list, TIMEOUT_MS).run()
 
   // Stop timer
   let stop = new Date().getTime()
@@ -46,6 +95,9 @@ var run_test = function(test_id) {
   // Show the time
   let new_time = document.createElement("li")
   new_time.innerHTML = result.total + " parole inserite in " + (stop - start) + " ms"
+  if (result.runs !== undefined) {
+    new_time.innerHTML += " (usando " + result.runs + " ripetizioni)"
+  }
   let times = document.getElementById(test_id + "-times")
   times.insertBefore(new_time, times.firstChild)
 }
