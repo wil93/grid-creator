@@ -107,6 +107,7 @@ window.onload = function() {
     let test = document.createElement("div")
     let table = document.createElement("table")
     let button = document.createElement("button")
+    let description = document.createElement("div")
     let times = document.createElement("ol")
 
     table.id = t
@@ -117,6 +118,10 @@ window.onload = function() {
     button.onclick = function() { run_test(t) }
     button.innerHTML = t
 
+    description.classList.add("description")
+    description.innerHTML = TESTS[t][1]
+
+    test.appendChild(description)
     test.appendChild(button)
     test.appendChild(table)
     test.appendChild(times)

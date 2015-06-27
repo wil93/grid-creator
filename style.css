@@ -14,3 +14,7 @@ div.test td {
   height: 40px;
   text-align: center;
 }
+
+div.description {
+  height: 100px;
+}
