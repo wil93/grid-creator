@@ -37,31 +37,30 @@ var Repeated = function(Test) {
 }
 
 var TESTS = {
-<<<<<<< HEAD
-  "test-random": RandomGridCreatorJS,
-  // "test-trie": TrieGridCreatorJS,
-  "test-slow": SlowGridCreatorJS,
-  //"test2": FastGridCreatorJS,   (?)
-  "test-bckSm": SmartGridCreatorJS,
-=======
   "test-random": [
     RandomGridCreatorJS,
     `Questo algoritmo non prova ad inserire le parole, limitandosi invece a
 generare una matrice seguendo la distribuzione delle lettere nella lingua
 italiana. È quindi solo un algoritmo di prova per testare il "framework".`
   ],
-  "test-slow": [
+  "test-bt": [
     SlowGridCreatorJS,
     `Questo algoritmo è un semplice backtracking che inserisce una parola dopo
 l'altra, fermandosi quando non riesce più ad inserire una nuova parola.`
   ],
-  "repeated-test-slow": [
+  "repeated-test-bt": [
     Repeated(SlowGridCreatorJS),
     `Questo algoritmo è un'estensione di "test-slow" che esegue tante volte lo
 stesso algoritmo, tenendo traccia della migliore soluzione trovata, e si ferma
 quando esaurisce il tempo a sua disposizione.`
   ],
->>>>>>> 2488c5ce275bb0ee5cce32cb9761a299d55ee718
+  "test-bt-smart": [
+    SmartGridCreatorJS,
+    `Questo algoritmo è un miglioramento di "test-slow" che, invece di fermarsi
+appena trova un punto dove inserire una parola, continua a cercare nuovi punti
+e alla fine sceglie il candidato migliore (che introduce il minor numero di
+nuove lettere nella griglia).`
+  ]
 }
 
 var run_test = function(test_id) {

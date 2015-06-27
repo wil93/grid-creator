@@ -42,8 +42,8 @@ function SmartGridCreatorJS(word_list) {
 
   function comparison(){
     let differences = 0
-    for(int i=0;i<4;i++){
-      for(int j=0;j<4;j++){
+    for(let i=0;i<4;i++){
+      for(let j=0;j<4;j++){
         if(test[i][j]=='-') differences++
       }
     }

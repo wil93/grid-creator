@@ -18,3 +18,7 @@ div.test td {
 div.description {
   height: 100px;
 }
+
+button {
+  margin-bottom: 15px;
+}
