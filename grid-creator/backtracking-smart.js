@@ -21,8 +21,7 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     ["Z", "Z", "Z", "Z"],
   ]
   var usati = new Set()
-  var freecell = 0
-
+  var freecell = 16
 
 
   function clone (existingArray) {
@@ -88,7 +87,9 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   }
 
   var insertWord = function(word) {
+
     var bho = freecell
+    freecell = freecell - word.length
     temp = clone(result)
     usati.clear()
     var pos = []
