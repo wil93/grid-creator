@@ -131,7 +131,9 @@ window.onload = function() {
     button.id = t + "-button"
 
     times.reversed = true
-    button.onclick = function() { run_test(t) }
+    button.onclick = function(x) {
+      return function() { run_test(x) }
+    }(t);
     button.classList.add("test")
     button.innerHTML = "<i class='fa fa-play'></i> " + t
 
