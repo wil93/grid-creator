@@ -3,6 +3,13 @@ div.test {
   float: left;
 }
 
+div.test > div {
+  border-color: red;
+  border-style: dashed;
+  border-width: 3px;
+  padding: 10px;
+}
+
 div.test table {
   font-family: monospace;
   font-size: 30px;
@@ -19,6 +26,49 @@ div.description {
   height: 100px;
 }
 
-button {
+button.test {
   margin-bottom: 15px;
+  font-size: larger;
+}
+
+#controls {
+  display: none;
+  z-index: 2;
+  position: fixed;
+  background-color: rgb(191, 191, 191);
+  border-width: 5px;
+  border-style: ridge;
+  padding: 20px;
+}
+
+#show-controls, #hide-controls {
+  font-size: x-large;
+}
+
+#button-wrap {
+  margin-top: 30px;
+  text-align: right;
+}
+
+#controls-wrap {
+  height: 300px;
+}
+
+#test-container {
+  padding-top: 50px;
+}
+
+#show-controls {
+  position: fixed;
+}
+
+#controls textarea {
+  float: left;
+  height: 100%;
+}
+
+#controls > div > div {
+  text-align: right;
+  float: left;
+  margin-left: 30px;
 }

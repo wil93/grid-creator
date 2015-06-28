@@ -5,10 +5,67 @@
     <meta charset="utf-8"/>
     <title>Test</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
 
   <body>
+    <button id="show-controls" onclick="document.getElementById('controls').style.display='block'"><i class="fa fa-cog"></i> Settings</button>
+    <div id="controls">
+      <div id="controls-wrap">
+        <textarea id="wordlist" rows="30" cols="30">amico
+amica
+amici
+amiche
+madre
+padre
+marito
+moglie
+papa
+babbo
+mamma
+genitori
+figlio
+figlia
+figli
+figlie
+fratello
+fratelli
+sorelle
+sorella
+zii
+zie
+zio
+zia
+cugino
+cugini
+cugine
+cugina
+nonno
+nonni
+nonne
+nonna
+nipote
+nipoti
+prozio
+prozia
+sorella
+fratello</textarea>
+        <div>
+          <label for"timeout">Timeout (ms)</label>
+          <input id="timeout" name="timeout" type="number" name="quantity" min="10" max="300000" step="100" value="5000">
+          <br>
+          <label for"grid_side">Grid side</label>
+          <input id="grid_side" name="grid_side" type="number" name="quantity" min="3" max="6" value="4">
+        </div>
+      </div>
+      <div id="button-wrap">
+        <button id="hide-controls" onclick="document.getElementById('controls').style.display='none'"><i class="fa fa-check"></i> Save</button>
+      </div>
+    </div>
+
+    <div id="test-container"></div>
+
     <script type="application/javascript" src="grid-creator/backtracking.js"></script>
     <script type="application/javascript" src="grid-creator/backtracking-smart.js"></script>
     <script type="application/javascript" src="grid-creator/random.js"></script>

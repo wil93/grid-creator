@@ -1,8 +1,5 @@
 'use strict'
 
-var GRID_SIDE = 4
-var TIMEOUT_MS = 5000
-
 var Repeated = function(Test) {
   return function(grid_side, word_list, timeout_ms) {
     let start_time = new Date().getTime()
@@ -70,6 +67,9 @@ ferma quando esaurisce il tempo a sua disposizione.`
 }
 
 var run_test = function(test_id) {
+  var GRID_SIDE = document.getElementById("grid_side").value
+  var TIMEOUT_MS = document.getElementById("timeout").value
+
   let test = document.getElementById(test_id)
 
   if (test === null) {
@@ -82,7 +82,7 @@ var run_test = function(test_id) {
   }
 
   // Compute word list
-  let word_list = "amico,amica,amici,amiche,madre,padre,marito,moglie,papa,babbo,mamma,genitori,figlio,figlia,figli,figlie,fratello,fratelli,sorelle,sorella,zii,zie,zio,zia,cugino,cugini,cugine,cugina,nonno,nonni,nonne,nonna,nipote,nipoti,prozio,prozia,sorella,fratello".toUpperCase().split(",");
+  let word_list = document.getElementById("wordlist").value.toUpperCase().split("\n")
 
   // Start timer
   let start = new Date().getTime()
@@ -120,6 +120,7 @@ window.onload = function() {
 
   for (let t in TESTS) {
     let test = document.createElement("div")
+    let test_wrapper = document.createElement("div")
     let table = document.createElement("table")
     let button = document.createElement("button")
     let description = document.createElement("div")
@@ -131,7 +132,8 @@ window.onload = function() {
 
     times.reversed = true
     button.onclick = function() { run_test(t) }
-    button.innerHTML = t
+    button.classList.add("test")
+    button.innerHTML = "<i class='fa fa-play'></i> " + t
 
     description.classList.add("description")
     description.innerHTML = TESTS[t][1]
@@ -141,8 +143,9 @@ window.onload = function() {
     test.appendChild(table)
     test.appendChild(times)
 
-    test.setAttribute("class", "test")
-    document.body.appendChild(test)
+    test_wrapper.appendChild(test)
+    test_wrapper.classList.add("test")
+    document.getElementById("test-container").appendChild(test_wrapper)
 
     width += test.offsetWidth
   }
