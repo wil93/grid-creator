@@ -17,10 +17,13 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     let conta = 0
     let insert = false
 
-    do {
-        insert = insertWord(word_list[conta])
-        if (insert) conta++
-    } while (insert == true)
+    while (conta < word_list.length) {
+        if (insertWord(word_list[conta])) {
+            conta += 1
+        } else {
+            break
+        }
+    }
 
     return {
       "grid": result,

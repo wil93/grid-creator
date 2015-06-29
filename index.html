@@ -76,6 +76,21 @@ fratello</textarea>
     <script type="application/javascript;version=1.7" src="grid-creator/random.js"></script>
     <script type="application/javascript;version=1.7" src="grid-creator/trie.js"></script>
     <script type="application/javascript;version=1.7" src="test.js"></script>
+    <script>
+        document.addEventListener("mousewheel", function(event) {
+            // don't scroll vertically
+            event.preventDefault();
+
+            if (document.body.doScroll)  // for Internet Explorer
+                document.body.doScroll(event.wheelDelta>0?"left":"right");
+            else if ((event.wheelDelta || event.detail) > 0)
+                document.body.scrollLeft -= 30;
+            else
+                document.body.scrollLeft += 30;
+
+            return false;
+        });
+    </script>
   </body>
 
 </html>

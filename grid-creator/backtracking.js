@@ -15,10 +15,13 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
     let conta = 0
     let insert = false
 
-    do {
-        insert = insertWord(word_list[conta])
-        if (insert) conta++
-    } while (insert == true)
+    while (conta < word_list.length) {
+        if (insertWord(word_list[conta])) {
+            conta += 1
+        } else {
+            break
+        }
+    }
 
     return {
       "grid": result,
@@ -71,7 +74,7 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
 
       if (count === word.length - 1) {
         return true
-      } else {    
+      } else {
         for (let i=-1; i<=1; i++){
           for (let j=-1; j<=1; j++){
             if (x+i>=0 && y+j>=0 && x+i<4 && y+j<4){
