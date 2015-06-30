@@ -76,7 +76,7 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
     if (result[x][y] == "-" || (result[x][y] == word[count] && !usati.has(x * grid_side + y))) {
       let old = result[x][y]
       result[x][y] = word[count]
-      usati.add(x * 4 + y)
+      usati.add(x * grid_side + y)
 
       if (count === word.length - 1) {
         return true
