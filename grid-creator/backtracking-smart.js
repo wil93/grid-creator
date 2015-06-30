@@ -17,10 +17,13 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     let conta = 0
     let insert = false
 
-    do {
-        insert = insertWord(word_list[conta])
-        if (insert) conta++
-    } while (insert == true)
+    while (conta < word_list.length) {
+        if (insertWord(word_list[conta])) {
+            conta += 1
+        } else {
+            break
+        }
+    }
 
     return {
       "grid": result,
@@ -73,6 +76,7 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   var insertWord = function(word) {
     usati.clear()
     let old_result = clone(result)  // backup
+    let best_result = null
     let best = word.length + 1  // any candidate will surely be better
 
     var pos = []
@@ -96,13 +100,17 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
         let diff = differences(old_result, candidate)
         if (diff < best) {
           best = diff
-          result = clone(candidate)
+          best_result = clone(candidate)
         }
       }
     }
 
-    // if something was inserted, then "best" must have decreased
-    return (best < word.length + 1)
+    if (best_result !== null) {
+      result = clone(best_result)
+      return true
+    } else {
+      return false
+    }
   }
 
   var insertLetter = function(x, y, count, word) {
