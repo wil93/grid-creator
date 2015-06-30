@@ -71,7 +71,7 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
 
       if (count === word.length - 1) {
         return true
-      } else {    
+      } else {
         for (let i=-1; i<=1; i++){
           for (let j=-1; j<=1; j++){
             if (x+i>=0 && y+j>=0 && x+i<4 && y+j<4){
