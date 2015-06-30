@@ -2,12 +2,8 @@
 
 function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   var word_list = word_list;
-  var result = [
-    ["-", "-", "-", "-"],
-    ["-", "-", "-", "-"],
-    ["-", "-", "-", "-"],
-    ["-", "-", "-", "-"],
-  ]
+  var grid_side = grid_side;
+  var result = [];
   var candidate = null
   var usati = new Set()
   var freecell = grid_side * grid_side
@@ -16,6 +12,15 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   this.run = function() {
     let conta = 0
     let insert = false
+
+    //create the raw output
+    for (let i = 0; i < grid_side ; i++) {
+      let row = []
+        for (let i = 0; i < grid_side ; i++) {
+          row.push("-")
+        }
+      result.push(row)
+    }
 
     while (conta < word_list.length) {
         if (insertWord(word_list[conta])) {
@@ -47,8 +52,8 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   function differences(a, b) {
     let result = 0
 
-    for (let i=0; i<4; i++)
-      for (let j=0; j<4; j++)
+    for (let i=0; i<grid_side; i++)
+      for (let j=0; j<grid_side; j++)
         if (a[i][j] !== b[i][j])
           result += 1
 
@@ -80,8 +85,8 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     let best = word.length + 1  // any candidate will surely be better
 
     var pos = []
-    for (let i=0; i<4; i++){
-      for (let j=0; j<4; j++){
+    for (let i=0; i<grid_side; i++){
+      for (let j=0; j<grid_side; j++){
         if (result[i][j] === "-" || result[i][j] === word[0]) {
           pos.push({"i": i, "j": j})
         }
@@ -116,7 +121,7 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   var insertLetter = function(x, y, count, word) {
     let old = result[x][y]
     result[x][y] = word[count]
-    usati.add(x * 4 + y)
+    usati.add(x * grid_side + y)
 
     if (count === word.length - 1) {
       // a candidate was found, let's clone it
@@ -126,10 +131,10 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
       var pos = []
       for (let i=-1; i<=1; i++) {
         for (let j=-1; j<=1; j++) {
-          if (x+i>=0 && y+j>=0 && x+i<4 && y+j<4) {
+          if (x+i>=0 && y+j>=0 && x+i<grid_side && y+j<grid_side) {
             let ci = x+i
             let cj = y+j
-            if (result[ci][cj] === word[count + 1] && !usati.has(ci * 4 + cj)) {
+            if (result[ci][cj] === word[count + 1] && !usati.has(ci * grid_side + cj)) {
               pos.unshift({"i": ci, "j": cj})
             } else if (result[ci][cj] === "-") {
               pos.push({"i": ci, "j": cj})
@@ -150,6 +155,6 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     }
 
     result[x][y] = old
-    usati.delete(x * 4 + y)
+    usati.delete(x * grid_side + y)
   }
 }

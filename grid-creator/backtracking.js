@@ -2,18 +2,24 @@
 
 function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
   var word_list = word_list;
-  var result = [
-    ["-", "-", "-", "-"],
-    ["-", "-", "-", "-"],
-    ["-", "-", "-", "-"],
-    ["-", "-", "-", "-"],
-  ]
+  var grid_side = grid_side;
+
+  var result = [];
   var usati = new Set()
 
 
   this.run = function() {
     let conta = 0
     let insert = false
+
+    //create the raw output
+    for (let i = 0; i < grid_side ; i++) {
+      let row = []
+        for (let i = 0; i < grid_side ; i++) {
+          row.push("-")
+        }
+      result.push(row)
+    }
 
     while (conta < word_list.length) {
         if (insertWord(word_list[conta])) {
@@ -50,8 +56,8 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
   var insertWord = function(word) {
     usati.clear()
     var pos = []
-    for (let i=0; i<4; i++){
-      for (let j=0; j<4; j++){
+    for (let i=0; i< grid_side ; i++){
+      for (let j=0; j< grid_side ; j++){
         pos.push({"i": i, "j": j})
       }
     }
@@ -67,7 +73,7 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
   }
 
   var insertLetter = function(x,y,count,word) {
-    if (result[x][y] == "-" || (result[x][y] == word[count] && !usati.has(x * 4 + y))) {
+    if (result[x][y] == "-" || (result[x][y] == word[count] && !usati.has(x * grid_side + y))) {
       let old = result[x][y]
       result[x][y] = word[count]
       usati.add(x * 4 + y)
@@ -77,7 +83,7 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
       } else {
         for (let i=-1; i<=1; i++){
           for (let j=-1; j<=1; j++){
-            if (x+i>=0 && y+j>=0 && x+i<4 && y+j<4){
+            if (x+i>=0 && y+j>=0 && x+i<grid_side && y+j<grid_side){
               if (insertLetter(x+i,y+j,count+1,word)){
                 return true
               }
@@ -87,7 +93,7 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
       }
 
       result[x][y] = old
-      usati.delete(x * 4 + y)
+      usati.delete(x * grid_side + y)
     }
     return false
   }
