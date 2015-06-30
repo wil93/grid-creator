@@ -128,20 +128,25 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
       candidate = clone(result)
     } else {
       // list all the positions ("promising" ones first)
-      var pos = []
+      let good_ones = []
+      let bad_ones = []
       for (let i=-1; i<=1; i++) {
         for (let j=-1; j<=1; j++) {
           if (x+i>=0 && y+j>=0 && x+i<grid_side && y+j<grid_side) {
             let ci = x+i
             let cj = y+j
             if (result[ci][cj] === word[count + 1] && !usati.has(ci * grid_side + cj)) {
-              pos.unshift({"i": ci, "j": cj})
+              good_ones.push({"i": ci, "j": cj})
             } else if (result[ci][cj] === "-") {
-              pos.push({"i": ci, "j": cj})
+              bad_ones.push({"i": ci, "j": cj})
             }
           }
         }
       }
+
+      shuffle(good_ones)
+      shuffle(bad_ones)
+      let pos = good_ones.concat(bad_ones)
 
       // try the positions
       for (let k in pos) {
