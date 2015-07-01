@@ -1,10 +1,11 @@
 'use strict'
 
-function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
+function SmarterGridCreatorJS(grid_side, word_list, timeout_ms) {
   var word_list = word_list;
   var grid_side = grid_side;
   var result = [];
   var candidate = null
+  var usati_candidate = null
   var usati = new Set()
   var freecell = grid_side * grid_side
 
@@ -79,34 +80,66 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
   }
 
   var insertWord = function(word) {
-    usati.clear()
     let old_result = clone(result)  // backup
     let best_result = null
     let best = word.length + 1  // any candidate will surely be better
 
-    var pos = []
-    for (let i=0; i<grid_side; i++){
-      for (let j=0; j<grid_side; j++){
-        if (result[i][j] === "-" || result[i][j] === word[0]) {
-          pos.push({"i": i, "j": j})
+    // try every splitting point
+    for (let idx in word) {
+      let left = ""
+      let right = ""
+      for (let j in word) {
+        if (j <= idx) left += word[idx - j]  // not word[j], because we want left reversed
+        if (j >= idx) right += word[j]
+      }
+
+      // find starting positions
+      var pos = []
+      for (let i=0; i<grid_side; i++) {
+        for (let j=0; j<grid_side; j++) {
+          if (result[i][j] === "-" || result[i][j] === word[idx]) {
+            pos.push({"i": i, "j": j})
+          }
         }
       }
-    }
 
-    shuffle(pos)
+      shuffle(pos)
 
-    for (let k in pos) {
-      let i = pos[k].i
-      let j = pos[k].j
-      candidate = null
-      insertLetter(i, j, 0, word)
-      // check if a solution was found
-      if (candidate !== null) {
-        let diff = differences(old_result, candidate)
-        if (diff < best) {
-          best = diff
-          best_result = clone(candidate)
+      for (let k in pos) {
+        let i = pos[k].i
+        let j = pos[k].j
+
+        let func = function() {
+          // try to put the first half
+          candidate = null
+          insertLetter(i, j, 0, left)
+          // check if a solution was found
+          if (candidate !== null) {
+            result = clone(candidate)
+            usati = new Set(usati_candidate)
+            candidate = null
+            // try to put the other half
+            insertLetter(i, j, 0, right)
+            if (candidate !== null) {
+              let diff = differences(old_result, candidate)
+              if (diff < best) {
+                best = diff
+                best_result = clone(candidate)
+              }
+            }
+            result = clone(old_result)
+            usati.clear()
+          }
         }
+
+        // first try: left, then right
+        func()
+        // swap
+        let tmp = left
+        left = right
+        right = tmp
+        // second try: right, then left
+        func()
       }
     }
 
@@ -126,6 +159,7 @@ function SmartGridCreatorJS(grid_side, word_list, timeout_ms) {
     if (count === word.length - 1) {
       // a candidate was found, let's clone it
       candidate = clone(result)
+      usati_candidate = new Set(usati)
     } else {
       // list all the positions ("promising" ones first)
       let good_ones = []

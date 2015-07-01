@@ -63,6 +63,18 @@ nuove lettere nella griglia).`
     `Questo algoritmo è un'estensione di "test-bt-smart" che esegue tante volte
 lo stesso algoritmo, tenendo traccia della migliore soluzione trovata, e si
 ferma quando esaurisce il tempo a sua disposizione.`
+  ],
+  "test-bt-smarter": [
+    SmarterGridCreatorJS,
+    `Questo algoritmo è un miglioramento di "test-bt-smart" che, oltre che
+provare a partire da tutti i possibili punti di partenza, prova anche a dividere
+la parola da inserire in due parti (inserendo poi le due parti separatamente).`
+  ],
+  "repeated-test-bt-smarter": [
+    Repeated(SmarterGridCreatorJS),
+    `Questo algoritmo è un'estensione di "test-bt-smarter" che esegue tante
+volte lo stesso algoritmo, tenendo traccia della migliore soluzione trovata, e
+si ferma quando esaurisce il tempo a sua disposizione.`
   ]
 }
 

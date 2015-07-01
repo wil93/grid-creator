@@ -22,11 +22,11 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
     }
 
     while (conta < word_list.length) {
-        if (insertWord(word_list[conta])) {
-            conta += 1
-        } else {
-            break
-        }
+      if (insertWord(word_list[conta])) {
+        conta += 1
+      } else {
+        break
+      }
     }
 
     return {
