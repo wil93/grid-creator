@@ -81,13 +81,24 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
       if (count === word.length - 1) {
         return true
       } else {
-        for (let i=-1; i<=1; i++){
-          for (let j=-1; j<=1; j++){
-            if (x+i>=0 && y+j>=0 && x+i<grid_side && y+j<grid_side){
-              if (insertLetter(x+i,y+j,count+1,word)){
-                return true
-              }
+        // list all the positions
+        let pos = []
+        for (let i=-1; i<=1; i++) {
+          for (let j=-1; j<=1; j++) {
+            if (x+i>=0 && y+j>=0 && x+i<grid_side && y+j<grid_side) {
+              pos.push({"i": x+i, "j": y+j})
             }
+          }
+        }
+
+        shuffle(pos)
+
+        // try the positions
+        for (let k in pos) {
+          let i = pos[k].i
+          let j = pos[k].j
+          if (insertLetter(i, j, count+1, word)) {
+            return true
           }
         }
       }
