@@ -78,22 +78,19 @@ si ferma quando esaurisce il tempo a sua disposizione.`
   ]
 }
 
+var clear_containers = function(containers_array) {
+  for (let i in containers_array) {
+    let c = containers_array[i]
+    while (c.firstChild) {
+      c.removeChild(c.firstChild)
+    }
+  }
+}
+
 var clear_all = function() {
   if (confirm('Are you sure?')) {
-    let x = document.getElementsByTagName("ol")
-    for (let c in x) {
-      let cc = x[c]
-      while (cc.firstChild) {
-        cc.removeChild(cc.firstChild)
-      }
-    }
-    x = document.getElementsByTagName("table")
-    for (let c in x) {
-      let cc = x[c]
-      while (cc.firstChild) {
-        cc.removeChild(cc.firstChild)
-      }
-    }
+    clear_containers(document.getElementsByTagName("ol"))
+    clear_containers(document.getElementsByTagName("table"))
   }
 }
 
@@ -108,9 +105,7 @@ var run_test = function(test_id) {
   }
 
   // Clear the table
-  while (test.firstChild) {
-    test.removeChild(test.firstChild)
-  }
+  clear_containers([test])
 
   // Compute word list
   let word_list = document.getElementById("wordlist").value.toUpperCase().split("\n")
@@ -154,6 +149,7 @@ window.onload = function() {
     let test_wrapper = document.createElement("div")
     let table = document.createElement("table")
     let button = document.createElement("button")
+    let button2 = document.createElement("button")
     let description = document.createElement("div")
     let times = document.createElement("ol")
 
@@ -162,17 +158,28 @@ window.onload = function() {
     button.id = t + "-button"
 
     times.reversed = true
+
     button.onclick = function(x) {
       return function() { run_test(x) }
     }(t);
+
+    button2.onclick = function(x) {
+      return function() { run_entire_list(x) }
+    }(t);
+
     button.classList.add("test")
     button.innerHTML = "<i class='fa fa-play'></i> " + t
+
+    button2.classList.add("insert-all")
+    button2.classList.add("test")
+    button2.innerHTML = "<i class='fa fa-forward'></i> (insert entire list)"
 
     description.classList.add("description")
     description.innerHTML = TESTS[t][1]
 
     test.appendChild(description)
     test.appendChild(button)
+    test.appendChild(button2)
     test.appendChild(table)
     test.appendChild(times)
 
