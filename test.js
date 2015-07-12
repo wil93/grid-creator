@@ -78,6 +78,25 @@ si ferma quando esaurisce il tempo a sua disposizione.`
   ]
 }
 
+var clear_all = function() {
+  if (confirm('Are you sure?')) {
+    let x = document.getElementsByTagName("ol")
+    for (let c in x) {
+      let cc = x[c]
+      while (cc.firstChild) {
+        cc.removeChild(cc.firstChild)
+      }
+    }
+    x = document.getElementsByTagName("table")
+    for (let c in x) {
+      let cc = x[c]
+      while (cc.firstChild) {
+        cc.removeChild(cc.firstChild)
+      }
+    }
+  }
+}
+
 var run_test = function(test_id) {
   var GRID_SIDE = document.getElementById("grid_side").value
   var TIMEOUT_MS = document.getElementById("timeout").value

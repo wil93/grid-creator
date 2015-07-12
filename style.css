@@ -41,7 +41,7 @@ button.test {
   padding: 20px;
 }
 
-#show-controls, #hide-controls {
+#show-controls, #hide-controls, #clear-all {
   font-size: x-large;
 }
 
@@ -58,7 +58,7 @@ button.test {
   padding-top: 50px;
 }
 
-#show-controls {
+#header-bar {
   position: fixed;
 }
 

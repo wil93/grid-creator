@@ -10,7 +10,10 @@
   </head>
 
   <body>
-    <button id="show-controls" onclick="document.getElementById('controls').style.display='block'"><i class="fa fa-cog"></i> Settings</button>
+    <span id="header-bar">
+      <button id="show-controls" onclick="document.getElementById('controls').style.display='block'"><i class="fa fa-cog"></i> Settings</button>
+      <button id="clear-all" onclick="clear_all()"><i class="fa fa-trash"></i> Clear</button>
+    </span>
     <div id="controls">
       <div id="controls-wrap">
         <textarea id="wordlist" rows="30" cols="30">amico
