@@ -133,12 +133,81 @@ var run_test = function(test_id) {
 
   // Show the time
   let new_time = document.createElement("li")
-  new_time.innerHTML = result.total + " parole inserite in " + (stop - start) + " ms"
+  new_time.innerHTML = result.total + "/" + word_list.length + " parole inserite in " + (stop - start) + " ms"
   if (result.runs !== undefined) {
     new_time.innerHTML += " (usando " + result.runs + " ripetizioni)"
   }
   let times = document.getElementById(test_id + "-times")
   times.insertBefore(new_time, times.firstChild)
+
+  return result.total
+}
+
+var run_entire_list = function(test_id, start_at) {
+  var GRID_SIDE = document.getElementById("grid_side").value
+  var TIMEOUT_MS = document.getElementById("timeout").value
+
+  let test = document.getElementById(test_id)
+
+  if (test === null) {
+    return;
+  }
+
+  // Compute word list
+  let word_list = document.getElementById("wordlist").value.toUpperCase().split("\n")
+  if (start_at < word_list.length) {
+    word_list.splice(0, start_at)
+  } else {
+    // All words inserted
+    return
+  }
+
+  // Clear the table
+  clear_containers([test])
+
+  // Clear the time (if it's the first series)
+  if (start_at === 0) {
+    clear_containers([document.getElementById(test_id + "-times")])
+  }
+
+  // Start timer
+  let start = new Date().getTime()
+
+  // Create the test object and "run" it
+  let Test = TESTS[test_id][0]
+  let result = new Test(GRID_SIDE, word_list, TIMEOUT_MS).run()
+
+  // Stop timer
+  let stop = new Date().getTime()
+
+  // Show the table
+  for (let row in result.grid) {
+    let tr = document.createElement("tr")
+    for (let col in result.grid[row]) {
+      let td = document.createElement("td")
+      td.innerHTML = result.grid[row][col];
+      tr.appendChild(td);
+    }
+    test.appendChild(tr)
+  }
+
+  // Show the time
+  let new_time = document.createElement("li")
+  new_time.innerHTML = ((start_at ? start_at : 0) + result.total) + "/" + (start_at + word_list.length) + " parole inserite in " + (stop - start) + " ms"
+  if (result.runs !== undefined) {
+    new_time.innerHTML += " (usando " + result.runs + " ripetizioni)"
+  }
+  let times = document.getElementById(test_id + "-times")
+  times.insertBefore(new_time, times.firstChild)
+
+  if (result.total == 0) {
+    alert("Imprevisto: non si riesce a inserire una parola...")
+  } else {
+    // Call recursively (but wait, so the browser can redraw everything)
+    setTimeout(function() {
+      run_entire_list(test_id, start_at + result.total)
+    }, 100)
+  }
 }
 
 window.onload = function() {
@@ -164,7 +233,7 @@ window.onload = function() {
     }(t);
 
     button2.onclick = function(x) {
-      return function() { run_entire_list(x) }
+      return function() { run_entire_list(x, 0) }
     }(t);
 
     button.classList.add("test")
