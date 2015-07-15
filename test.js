@@ -139,8 +139,6 @@ var run_test = function(test_id) {
   }
   let times = document.getElementById(test_id + "-times")
   times.insertBefore(new_time, times.firstChild)
-
-  return result.total
 }
 
 var run_entire_list = function(test_id, start_at) {
