@@ -75,7 +75,19 @@ la parola da inserire in due parti (inserendo poi le due parti separatamente).`
     `Questo algoritmo è un'estensione di "test-bt-smarter" che esegue tante
 volte lo stesso algoritmo, tenendo traccia della migliore soluzione trovata, e
 si ferma quando esaurisce il tempo a sua disposizione.`
-  ]
+  ],
+  "test-lookback": [
+    LookbackCreatorJS,
+    `Questo algoritmo cerca, tra le parole già inserite, una sovrapposizione di
+lettere. La sovrapposizione trovata viene data per inserita, mentre le restanti
+lettere vengono inserite a parte (prima e/o dopo la sovrapposizione).`
+  ],
+  "repeated-test-lookback": [
+    Repeated(LookbackCreatorJS),
+    `Questo algoritmo è un'estensione di "test-lookback" che esegue tante volte
+lo stesso algoritmo, tenendo traccia della migliore soluzione trovata, e si
+ferma quando esaurisce il tempo a sua disposizione.`
+  ],
 }
 
 var clear_containers = function(containers_array) {

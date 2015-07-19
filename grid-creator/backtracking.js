@@ -15,9 +15,9 @@ function SlowGridCreatorJS(grid_side, word_list, timeout_ms) {
     //create the raw output
     for (let i = 0; i < grid_side ; i++) {
       let row = []
-        for (let i = 0; i < grid_side ; i++) {
-          row.push("-")
-        }
+      for (let i = 0; i < grid_side ; i++) {
+        row.push("-")
+      }
       result.push(row)
     }
 

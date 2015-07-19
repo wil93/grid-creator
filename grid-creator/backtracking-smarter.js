@@ -7,7 +7,6 @@ function SmarterGridCreatorJS(grid_side, word_list, timeout_ms) {
   var candidate = null
   var usati_candidate = null
   var usati = new Set()
-  var freecell = grid_side * grid_side
 
 
   this.run = function() {
@@ -17,9 +16,9 @@ function SmarterGridCreatorJS(grid_side, word_list, timeout_ms) {
     //create the raw output
     for (let i = 0; i < grid_side ; i++) {
       let row = []
-        for (let i = 0; i < grid_side ; i++) {
-          row.push("-")
-        }
+      for (let i = 0; i < grid_side ; i++) {
+        row.push("-")
+      }
       result.push(row)
     }
 
@@ -103,7 +102,7 @@ function SmarterGridCreatorJS(grid_side, word_list, timeout_ms) {
         }
       }
 
-      shuffle(pos)
+      //shuffle(pos)
 
       for (let k in pos) {
         let i = pos[k].i
