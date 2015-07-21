@@ -220,7 +220,36 @@ var run_entire_list = function(test_id, start_at) {
   }
 }
 
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  }
+  return false;
+}
+
 window.onload = function() {
+  let show = getQueryVariable("show")
+  if (show) {
+    // only one test is requested, delete the others
+    for (let t in TESTS) {
+      if (t !== show) {
+        delete TESTS[t]
+      } else {
+        TESTS[t][1] = '<a style="float:right" href="?">(Show all tests)</a><br>' + TESTS[t][1]
+      }
+    }
+  } else {
+    // all tests are requested, create links to show single tests
+    for (let t in TESTS) {
+      TESTS[t][1] = '<a style="float:right" href="?show=' + t + '">(Show only this test)</a><br>' + TESTS[t][1]
+    }
+  }
+
   let width = 0
 
   for (let t in TESTS) {
