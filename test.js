@@ -240,13 +240,13 @@ window.onload = function() {
       if (t !== show) {
         delete TESTS[t]
       } else {
-        TESTS[t][1] = '<a style="float:right" href="?">(Show all tests)</a><br>' + TESTS[t][1]
+        TESTS[t][1] = '<a style="float:right" href="?">(show all tests)</a><br>' + TESTS[t][1]
       }
     }
   } else {
     // all tests are requested, create links to show single tests
     for (let t in TESTS) {
-      TESTS[t][1] = '<a style="float:right" href="?show=' + t + '">(Show only this test)</a><br>' + TESTS[t][1]
+      TESTS[t][1] = '<a style="float:right" href="?show=' + t + '">(show only this test)</a><br>' + TESTS[t][1]
     }
   }
 
